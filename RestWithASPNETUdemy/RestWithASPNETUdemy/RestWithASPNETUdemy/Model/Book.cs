@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using RestWithASPNETUdemy.Model.Base;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RestWithASPNETUdemy.Model
 {
     [Table("books")]
-    public class Book
+    public class Book : BaseEntity
     {
-        [Column("id")]
-        public long Id { get; set; }
-
         [Column("title")]
         public string Title { get; set; }
 
@@ -24,4 +19,5 @@ namespace RestWithASPNETUdemy.Model
         [Column("launch_date")]
         public DateTime LaunchDate { get; set; }
     }
+
 }
