@@ -25,6 +25,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace RestWithASPNETUdemy
 {
@@ -93,10 +95,10 @@ namespace RestWithASPNETUdemy
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
-            if (Environment.IsDevelopment())
-            {
-                MigrateDatabase(connection);
-            }
+            //if (Environment.IsDevelopment())
+            //{
+            //    MigrateDatabase(connection);
+            //}
 
             services.AddMvc(options =>
             {
@@ -132,9 +134,13 @@ namespace RestWithASPNETUdemy
                 });
             });
             //Dependency Injection
+
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
             services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
+            services.AddScoped<IFileBusiness, FileBusinessImplementation>();
 
             services.AddTransient<ITokenService, TokenService>();
 

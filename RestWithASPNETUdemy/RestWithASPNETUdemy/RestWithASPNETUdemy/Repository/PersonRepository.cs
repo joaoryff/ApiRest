@@ -2,6 +2,7 @@
 using RestWithASPNETUdemy.Model.Context;
 using RestWithASPNETUdemy.Repository.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RestWithASPNETUdemy.Repository
@@ -18,7 +19,7 @@ namespace RestWithASPNETUdemy.Repository
             var user = _context.Persons.SingleOrDefault(p => p.Id.Equals(id));
             if (user != null)
             {
-                user.Enable = false;
+                user.Enabled = false;
                 try
                 {
                     _context.Entry(user).CurrentValues.SetValues(user);
@@ -31,6 +32,27 @@ namespace RestWithASPNETUdemy.Repository
                 }
             }
             return user;
+        }
+
+        public List<Person> FindByName(string firstName, string lastName)
+        {
+            if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
+            {
+                return _context.Persons.Where(
+                    p => p.FirstName.Contains(firstName)
+                    && p.LastName.Contains(lastName)).ToList();
+            }
+            else if (string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
+            {
+                return _context.Persons.Where(
+                    p => p.LastName.Contains(lastName)).ToList();
+            }
+            else if (!string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
+            {
+                return _context.Persons.Where(
+                    p => p.FirstName.Contains(firstName)).ToList();
+            }
+            return null;
         }
     }
 }

@@ -1,0 +1,35 @@
+docker-compose up -d
+
+docker ps -a
+
+***** Se tiver problema passar o id  *com exemplo de id
+
+docker logs eb739c7251eb   
+
+
+**** Rodar  cuidado com o 's' do https
+
+http://localhost:44300/swagger/index.html
+
+**** Alterar no Postman tb o s
+
+{{baseUrl}}/api/Person/v{{version}}/asc/5/1?name=eo   Get 
+
+
+****  ENVIAR IMAGEM PARA O DOCKER HUB
+
+**** Listar imagens
+docker images
+
+*** Logar
+docker login docker.io
+
+***Criar TAG - ultimo nome eh o nome q vai ficar no hub
+docker tag rest-with-asp-net-udemy:latest joaoryff/rest-with-asp-net-udemy:latest
+docker tag rest-with-asp-net-udemy-db:latest joaoryff/rest-with-asp-net-udemy-db:latest
+
+*** Eh bom para verificar se deu certo
+docker images  
+
+
+
